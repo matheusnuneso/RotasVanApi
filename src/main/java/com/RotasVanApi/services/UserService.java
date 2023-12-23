@@ -32,4 +32,8 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public void delete(UserModel userModel){
+        userRepository.delete(userModel);
+    }
+
 }
