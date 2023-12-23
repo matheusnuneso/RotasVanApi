@@ -30,4 +30,9 @@ public class UserModel implements Serializable {
     @Column(nullable = false)
     private RoleUser role;
 
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
 }

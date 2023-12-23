@@ -25,8 +25,15 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto){
+
+        if (userService.existsByEmail(userDto.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já está em uso");
+        }
+
         var userModel = new UserModel();
         BeanUtils.copyProperties(userDto, userModel);
+
+        userModel.setSenha("123456");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
     }

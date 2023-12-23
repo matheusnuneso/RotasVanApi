@@ -23,4 +23,7 @@ public class UserDto {
     @NotNull
     private RoleUser role;
 
+    @NotBlank
+    private String email;
+
 }
