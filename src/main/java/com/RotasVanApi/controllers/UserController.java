@@ -1,5 +1,6 @@
 package com.RotasVanApi.controllers;
 
+import com.RotasVanApi.dto.AuthUserDto;
 import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.UserService;
@@ -64,6 +65,25 @@ public class UserController {
 
         userService.delete(userModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Usuário deletado com sucesso");
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<Object> authUser(@RequestBody @Valid AuthUserDto authUserDto){
+        Optional<UserModel> userModelOp = userService.findByEmail(authUserDto.getEmail());
+
+        if (userModelOp.isPresent()){
+
+            UserModel userModel = userModelOp.get();
+            if (userModel.getSenha().equals(authUserDto.getSenha())){
+                return ResponseEntity.status(HttpStatus.OK).body(userModel);
+
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário ou senha incorretos");
+            }
+
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
     }
 
 
