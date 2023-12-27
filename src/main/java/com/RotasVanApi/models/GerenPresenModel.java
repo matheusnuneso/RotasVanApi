@@ -3,8 +3,6 @@ package com.RotasVanApi.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-
 @Table(name = "TB_GEREN_PRESEN")
 @Entity
 @Data
@@ -17,7 +15,7 @@ public class GerenPresenModel {
     @Column(nullable = false)
     private Long idAluno;
 
-    @Column(nullable = false)
+    @Column(name = "data_n_presenca", nullable = false)
     private String dataNPresenca;
 
 }

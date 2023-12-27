@@ -8,11 +8,12 @@ import java.io.Serializable;
 
 @Table(name = "TB_USER")
 @Entity
+@SequenceGenerator(name = "seq", initialValue = 10)
 @Data
 public class UserModel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Long id;
 
     @Column(nullable = false)
@@ -28,7 +29,7 @@ public class UserModel implements Serializable {
     private String bairroEndereco;
 
     @Column(nullable = false)
-    private RoleUser role;
+    private String role;
 
     @Column(nullable = false)
     private String email;

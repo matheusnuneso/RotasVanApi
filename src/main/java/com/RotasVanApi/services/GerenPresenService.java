@@ -27,18 +27,18 @@ public class GerenPresenService {
 
     public List<UserModel> findAlunosPresentes(String data){
         List<GerenPresenModel> listaGerencia = gerenPresenRepository.findByDataNPresenca(data);
-        List<UserModel> listaUser = new ArrayList<>();
+        List<UserModel> listaAlunos = userRepository.findByRole("ALUNO");
 
         if (!listaGerencia.isEmpty()){
             for(GerenPresenModel gm : listaGerencia){
 
                 Optional<UserModel> userModelOptional = userRepository.findById(gm.getIdAluno());
-                userModelOptional.ifPresent(listaUser::add);
+                userModelOptional.ifPresent(listaAlunos::remove);
 
             }
         }
 
-        return listaUser;
+        return listaAlunos;
     }
 
 }

@@ -21,7 +21,7 @@ public class UserDto {
     private String bairroEndereco;
 
     @NotNull
-    private RoleUser role;
+    private String role;
 
     @NotBlank
     private String email;
