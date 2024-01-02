@@ -36,4 +36,10 @@ public class UserModel implements Serializable {
 
     @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
 }

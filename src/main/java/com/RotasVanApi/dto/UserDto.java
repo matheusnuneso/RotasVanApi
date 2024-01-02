@@ -26,4 +26,10 @@ public class UserDto {
     @NotBlank
     private String email;
 
+    @NotNull
+    private Double latitude;
+
+    @NotNull
+    private Double longitude;
+
 }
