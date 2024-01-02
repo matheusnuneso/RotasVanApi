@@ -2,6 +2,7 @@ package com.RotasVanApi.controllers;
 
 import com.RotasVanApi.dto.AuthUserDto;
 import com.RotasVanApi.dto.UserDto;
+import com.RotasVanApi.enums.RoleUser;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.UserService;
 import jakarta.validation.Valid;
@@ -53,6 +54,13 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(userModelOptional.get());
+    }
+
+    @GetMapping("/alunos")
+    public ResponseEntity<List<UserModel>> getUserAluno(){
+        List<UserModel> userList = userService.findByRole(RoleUser.ALUNO.toString());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userList);
     }
 
     @DeleteMapping("/{id}")
