@@ -41,8 +41,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserModel>> getAllUsers(){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto> userDtoList = userService.copyListModelToDto(userService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
 
     @GetMapping("/{id}")
@@ -53,14 +54,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(userModelOptional.get());
+        UserDto userDto = userService.copyModelToDto(userModelOptional.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
     @GetMapping("/alunos")
-    public ResponseEntity<List<UserModel>> getUserAluno(){
-        List<UserModel> userList = userService.findByRole(RoleUser.ALUNO.toString());
+    public ResponseEntity<List<UserDto>> getUserAluno(){
+        List<UserModel> userModelList = userService.findByRole(RoleUser.ALUNO.toString());
+        List<UserDto> userDtoList = userService.copyListModelToDto(userModelList);
 
-        return ResponseEntity.status(HttpStatus.OK).body(userList);
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
 
     @DeleteMapping("/{id}")
@@ -83,7 +87,7 @@ public class UserController {
 
             UserModel userModel = userModelOp.get();
             if (userModel.getSenha().equals(authUserDto.getSenha())){
-                return ResponseEntity.status(HttpStatus.OK).body(userModel);
+                return ResponseEntity.status(HttpStatus.OK).body(userService.copyModelToDto(userModel));
 
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário ou senha incorretos");
