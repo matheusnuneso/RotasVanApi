@@ -47,22 +47,4 @@ public class UserService {
         return userRepository.findByRole(role);
     }
 
-    public List<UserDto> copyListModelToDto(List<UserModel> userModelList){
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (UserModel userModel : userModelList) {
-            UserDto userDto = new UserDto();
-            BeanUtils.copyProperties(userModel, userDto);
-            userDtoList.add(userDto);
-        }
-
-        return userDtoList;
-    }
-
-    public UserDto copyModelToDto(UserModel userModel){
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userModel, userDto);
-        return userDto;
-    }
-
 }

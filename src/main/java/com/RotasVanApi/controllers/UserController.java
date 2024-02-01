@@ -5,6 +5,7 @@ import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.enums.RoleUser;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.UserService;
+import com.RotasVanApi.utils.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers(){
-        List<UserDto> userDtoList = userService.copyListModelToDto(userService.findAll());
+        List<UserDto> userDtoList = Utils.copyUserListModelToDto(userService.findAll());
         return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
 
@@ -54,7 +55,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
 
-        UserDto userDto = userService.copyModelToDto(userModelOptional.get());
+        UserDto userDto = Utils.copyUserModelToDto(userModelOptional.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
@@ -62,7 +63,7 @@ public class UserController {
     @GetMapping("/alunos")
     public ResponseEntity<List<UserDto>> getUserAluno(){
         List<UserModel> userModelList = userService.findByRole(RoleUser.ALUNO.toString());
-        List<UserDto> userDtoList = userService.copyListModelToDto(userModelList);
+        List<UserDto> userDtoList = Utils.copyUserListModelToDto(userModelList);
 
         return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
@@ -87,7 +88,7 @@ public class UserController {
 
             UserModel userModel = userModelOp.get();
             if (userModel.getSenha().equals(authUserDto.getSenha())){
-                return ResponseEntity.status(HttpStatus.OK).body(userService.copyModelToDto(userModel));
+                return ResponseEntity.status(HttpStatus.OK).body(Utils.copyUserModelToDto(userModel));
 
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário ou senha incorretos");
