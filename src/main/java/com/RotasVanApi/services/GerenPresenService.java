@@ -4,6 +4,7 @@ import com.RotasVanApi.models.GerenPresenModel;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.repositories.GerenPresenRepository;
 import com.RotasVanApi.repositories.UserRepository;
+import com.RotasVanApi.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,11 +27,11 @@ public class GerenPresenService {
     }
 
     public List<UserModel> findAlunosPresentes(String data){
-        List<GerenPresenModel> listaGerencia = gerenPresenRepository.findByDataNPresenca(data);
+        List<GerenPresenModel> listaNPresenca = gerenPresenRepository.findByDataNPresenca(Utils.stringToDate(data));
         List<UserModel> listaAlunos = userRepository.findByRole("ALUNO");
 
-        if (!listaGerencia.isEmpty()){
-            for(GerenPresenModel gm : listaGerencia){
+        if (!listaNPresenca.isEmpty()){
+            for(GerenPresenModel gm : listaNPresenca){
 
                 Optional<UserModel> userModelOptional = userRepository.findById(gm.getIdAluno());
                 userModelOptional.ifPresent(listaAlunos::remove);

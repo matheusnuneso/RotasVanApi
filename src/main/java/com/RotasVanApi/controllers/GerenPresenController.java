@@ -4,12 +4,14 @@ import com.RotasVanApi.dto.GerenPresenDto;
 import com.RotasVanApi.models.GerenPresenModel;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.GerenPresenService;
+import com.RotasVanApi.utils.Utils;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DateTimeException;
 import java.util.List;
 
 @RestController
@@ -26,14 +28,22 @@ public class GerenPresenController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid GerenPresenDto gerenPresenDto){
         GerenPresenModel gerenPresenModel = new GerenPresenModel();
-        BeanUtils.copyProperties(gerenPresenDto, gerenPresenModel);
+
+        gerenPresenModel.setIdAluno(gerenPresenDto.getIdAluno());
+        gerenPresenModel.setDataNPresenca(Utils.stringToDate(gerenPresenDto.getDataNPresenca()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(gerenPresenService.save(gerenPresenModel));
     }
 
     @GetMapping("/{data}")
-    public ResponseEntity<List<UserModel>> getAlunosPresentes(@PathVariable(value = "data") String data){
-        String dataFormatada = data.replace("-", "/");
-        return ResponseEntity.status(HttpStatus.OK).body(gerenPresenService.findAlunosPresentes(dataFormatada));
+    public ResponseEntity<Object> getAlunosPresentes(@PathVariable(value = "data") String data){
+
+        try {
+            List<UserModel> userModelList = gerenPresenService.findAlunosPresentes(data);
+            return ResponseEntity.status(HttpStatus.OK).body(userModelList);
+        } catch (DateTimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data informada inválida!");
+        }
+
     }
 }

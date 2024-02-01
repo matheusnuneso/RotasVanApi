@@ -7,4 +7,4 @@ INSERT INTO TB_USER (id, nome, rua_endereco, num_endereco, bairro_endereco, role
 INSERT INTO TB_USER (id, nome, rua_endereco, num_endereco, bairro_endereco, role, email, senha, latitude, longitude) VALUES (7, 'Sasuke', 'Rua Sakura', 97, 'Naruto', 'ALUNO', 'sasuke@gmail.com', '123456', -20.654956, -43.781323);
 INSERT INTO TB_USER (id, nome, rua_endereco, num_endereco, bairro_endereco, role, email, senha, latitude, longitude) VALUES (8, 'Izaias', 'Rua Sakura', 155, 'Eliana', 'ADM', 'izaias@gmail.com', '123456', -20.653484, -43.784396);
 
-INSERT INTO TB_GEREN_PRESEN (id, id_aluno, data_n_presenca) VALUES (1, 1, '25/12/2023');
+--INSERT INTO TB_GEREN_PRESEN (id, id_aluno, data_n_presenca) VALUES (1, 1, '25-12-2023');
