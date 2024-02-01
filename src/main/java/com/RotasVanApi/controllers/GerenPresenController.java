@@ -1,6 +1,7 @@
 package com.RotasVanApi.controllers;
 
 import com.RotasVanApi.dto.GerenPresenDto;
+import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.models.GerenPresenModel;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.GerenPresenService;
@@ -39,8 +40,8 @@ public class GerenPresenController {
     public ResponseEntity<Object> getAlunosPresentes(@PathVariable(value = "data") String data){
 
         try {
-            List<UserModel> userModelList = gerenPresenService.findAlunosPresentes(data);
-            return ResponseEntity.status(HttpStatus.OK).body(userModelList);
+            List<UserDto> userDtoList = gerenPresenService.findAlunosPresentes(data);
+            return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
         } catch (DateTimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data informada inválida!");
         }

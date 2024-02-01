@@ -1,10 +1,12 @@
 package com.RotasVanApi.services;
 
+import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.models.GerenPresenModel;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.repositories.GerenPresenRepository;
 import com.RotasVanApi.repositories.UserRepository;
 import com.RotasVanApi.utils.Utils;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class GerenPresenService {
         return gerenPresenRepository.save(gerenPresenModel);
     }
 
-    public List<UserModel> findAlunosPresentes(String data){
+    public List<UserDto> findAlunosPresentes(String data){
         List<GerenPresenModel> listaNPresenca = gerenPresenRepository.findByDataNPresenca(Utils.stringToDate(data));
         List<UserModel> listaAlunos = userRepository.findByRole("ALUNO");
 
@@ -39,7 +41,7 @@ public class GerenPresenService {
             }
         }
 
-        return listaAlunos;
+        return Utils.copyUserListModelToDto(listaAlunos);
     }
 
 }
