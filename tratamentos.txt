@@ -1,0 +1,6 @@
+Tratar para permitir mais de uma van (criar entidade VAN, todos os users pertenem a uma van)
+
+
+
+No app, trocar o padrão que é enviado a data de dd/MM/yyyy para dd-MM-yyyy
+
