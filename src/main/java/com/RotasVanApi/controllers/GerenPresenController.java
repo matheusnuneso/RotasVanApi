@@ -36,11 +36,11 @@ public class GerenPresenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(gerenPresenService.save(gerenPresenModel));
     }
 
-    @GetMapping("/{data}")
-    public ResponseEntity<Object> getAlunosPresentes(@PathVariable(value = "data") String data){
+    @GetMapping("/van/{idVan}/{data}")
+    public ResponseEntity<Object> getAlunosPresentes(@PathVariable(value = "idVan") Long idVan, @PathVariable(value = "data") String data){
 
         try {
-            List<UserDto> userDtoList = gerenPresenService.findAlunosPresentes(data);
+            List<UserDto> userDtoList = gerenPresenService.findAlunosPresentes(idVan, data);
             return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
         } catch (DateTimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data informada inválida!");

@@ -64,9 +64,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
     }
 
-    @GetMapping("/alunos")
-    public ResponseEntity<List<UserDto>> getUserAluno(){
-        List<UserModel> userModelList = userService.findByRole(RoleUser.ALUNO.toString());
+    @GetMapping("/aluno/van/{idVan}")
+    public ResponseEntity<List<UserDto>> getUserAluno(@PathVariable(value = "idVan") Long idVan){
+        List<UserModel> userModelList = userService.findByRole(RoleUser.ALUNO.toString(), idVan);
         List<UserDto> userDtoList = Utils.copyUserListModelToDto(userModelList);
 
         return ResponseEntity.status(HttpStatus.OK).body(userDtoList);

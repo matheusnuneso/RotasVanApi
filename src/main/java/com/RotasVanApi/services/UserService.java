@@ -1,12 +1,9 @@
 package com.RotasVanApi.services;
 
-import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.repositories.UserRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +40,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public List<UserModel> findByRole(String role){
-        return userRepository.findByRole(role);
+    public List<UserModel> findByRole(String role, Long idVan){
+        return userRepository.findByRoleAndIdVan(role, idVan);
     }
 
 }
