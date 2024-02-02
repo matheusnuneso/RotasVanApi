@@ -31,4 +31,8 @@ public class VanService {
     public Optional<VanModel> findById(Long id){
         return this.vanRepository.findById(id);
     }
+
+    public boolean existById(Long id){
+        return vanRepository.existsById(id);
+    }
 }

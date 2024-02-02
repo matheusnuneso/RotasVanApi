@@ -5,8 +5,10 @@ import com.RotasVanApi.dto.UserDto;
 import com.RotasVanApi.enums.RoleUser;
 import com.RotasVanApi.models.UserModel;
 import com.RotasVanApi.services.UserService;
+import com.RotasVanApi.services.VanService;
 import com.RotasVanApi.utils.Utils;
 import jakarta.validation.Valid;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +17,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Builder
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(value = "api/users")
 public class UserController {
 
     final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    final VanService vanService;
 
     @PostMapping
     public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDto userDto){
 
         if (userService.existsByEmail(userDto.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já está em uso");
+        }
+
+        if (!vanService.existById(userDto.getIdVan())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Van não encontrada");
         }
 
         var userModel = new UserModel();

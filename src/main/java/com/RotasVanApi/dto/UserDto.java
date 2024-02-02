@@ -34,4 +34,7 @@ public class UserDto {
     @NotNull
     private Double longitude;
 
+    @NotNull
+    private Long idVan;
+
 }

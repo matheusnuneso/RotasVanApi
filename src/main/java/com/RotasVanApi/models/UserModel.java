@@ -42,4 +42,7 @@ public class UserModel implements Serializable {
 
     @Column(nullable = false)
     private Double longitude;
+
+    @Column(nullable = false)
+    private Long idVan;
 }
